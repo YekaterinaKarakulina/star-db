@@ -6,6 +6,8 @@ import ErrorIndicator from '../error-indicator/error-indicator';
 
 import './people-page.css';
 import SwapiService from '../../services/swapi-service';
+import Row from '../row';
+import ErrorBoundry from '../error-boundry';
 
 export default class PeoplePage extends Component {
 
@@ -16,36 +18,31 @@ export default class PeoplePage extends Component {
     hasError: false
   }
 
-  componentDidCatch(error, info) {
-
-    this.setState({
-      hasError: true
-    });
-  }
-
   onPersonSelected = (selectedPerson) => {
     this.setState({ selectedPerson });
   };
 
-
   render() {
-
     if (this.state.hasError) {
       return <ErrorIndicator />;
     }
 
+    const itemList = (
+      <ItemList
+        onItemSelected={this.onPersonSelected}
+        getData={this.swapiService.getAllPeople}
+        renderItem={({ name, gender }) => `${name} (${gender})`}
+      />
+    )
+
+    const personDetails = (
+      <PersonDetails personId={this.state.selectedPerson} />
+    )
+
     return (
-      <div className="row mb-3">
-        <div className="col-md-6">
-          <ItemList
-            onItemSelected={this.onPersonSelected}
-            getData={this.swapiService.getAllPeople}
-            renderItem={({ name, gender, birthYear }) => `${name} (${gender}, ${birthYear})`} />
-        </div>
-        <div className="col-md-6">
-          <PersonDetails personId={this.state.selectedPerson} />
-        </div>
-      </div>
+      <ErrorBoundry>
+        <Row left={itemList} right={personDetails} />
+      </ErrorBoundry>
     )
   }
 }
