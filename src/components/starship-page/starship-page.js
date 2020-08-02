@@ -2,18 +2,20 @@ import React, { Component } from 'react';
 
 import ItemDetails from '../item-details/item-details';
 import ErrorIndicator from '../error-indicator/error-indicator';
+
 import SwapiService from '../../services/swapi-service';
 import Row from '../row';
 import ErrorBoundry from '../error-boundry';
 import Record from '../record';
-import { PersonList } from '../sw-components';
 
-export default class PeoplePage extends Component {
+import { StarshipList } from '../sw-components';
+
+export default class StarshipPage extends Component {
 
   swapiService = new SwapiService();
 
   state = {
-    selectedItem: 5,
+    selectedItem: 9,
     hasError: false
   }
 
@@ -27,18 +29,20 @@ export default class PeoplePage extends Component {
     }
 
     const itemList = (
-      <PersonList
+      <StarshipList
         onItemSelected={this.onItemSelected}
-        renderItem={({ name, gender }) => `${name} (${gender})`}
+        renderItem={({ name, model }) => `${name} (${model})`}
       />
     )
 
     const itemDetails = (
-      <ItemDetails itemId={this.state.selectedItem}
-        getData={this.swapiService.getPerson}
-        getImageUrl={this.swapiService.getPersonImage} >
-        <Record field="gender" label="Gender" />
-        <Record field="eyeColor" label="Eye Color" />
+      <ItemDetails
+        itemId={this.state.selectedItem}
+        getData={this.swapiService.getStarship}
+        getImageUrl={this.swapiService.getStarshipImage}>
+        <Record field="model" label="Model" />
+        <Record field="length" label="Length" />
+        <Record field="costInCredits" label="Cost" />
       </ItemDetails>
     )
 

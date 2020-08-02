@@ -6,14 +6,14 @@ import SwapiService from '../../services/swapi-service';
 import Row from '../row';
 import ErrorBoundry from '../error-boundry';
 import Record from '../record';
-import { PersonList } from '../sw-components';
+import { PlanetList } from '../sw-components';
 
-export default class PeoplePage extends Component {
+export default class PlanetPage extends Component {
 
   swapiService = new SwapiService();
 
   state = {
-    selectedItem: 5,
+    selectedItem: 9,
     hasError: false
   }
 
@@ -27,18 +27,20 @@ export default class PeoplePage extends Component {
     }
 
     const itemList = (
-      <PersonList
+      <PlanetList
         onItemSelected={this.onItemSelected}
-        renderItem={({ name, gender }) => `${name} (${gender})`}
+        renderItem={({ name, diameter }) => `${name} (${diameter})`}
       />
     )
 
     const itemDetails = (
-      <ItemDetails itemId={this.state.selectedItem}
-        getData={this.swapiService.getPerson}
-        getImageUrl={this.swapiService.getPersonImage} >
-        <Record field="gender" label="Gender" />
-        <Record field="eyeColor" label="Eye Color" />
+      <ItemDetails
+        itemId={this.state.selectedItem}
+        getData={this.swapiService.getPlanet}
+        getImageUrl={this.swapiService.getPlanetImage}>
+        <Record field="population" label="Population" />
+        <Record field="rotationPeriod" label="Rotation Period" />
+        <Record field="diameter" label="Diameter" />
       </ItemDetails>
     )
 
