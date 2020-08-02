@@ -60,7 +60,7 @@ export default class ItemDetails extends Component {
 
     const spinner = loading ? <Spinner /> : null;
 
-    const { id, name, gender, birthYear, eyeColor } = item;
+    const { name } = item;
 
     return (
       <div className="person-details card" >
