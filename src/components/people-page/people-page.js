@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 
 import ItemList from '../item-list/item-list';
-import PersonDetails from '../person-details/person-details';
+import ItemDetails from '../item-details/item-details';
 import ErrorIndicator from '../error-indicator/error-indicator';
 
 import './people-page.css';
 import SwapiService from '../../services/swapi-service';
 import Row from '../row';
 import ErrorBoundry from '../error-boundry';
+import Record from '../record';
 
 export default class PeoplePage extends Component {
 
@@ -36,7 +37,13 @@ export default class PeoplePage extends Component {
     )
 
     const personDetails = (
-      <PersonDetails personId={this.state.selectedPerson} />
+      <ItemDetails itemId={this.state.selectedPerson}
+        getData={this.swapiService.getPerson}
+        getImageUrl={this.swapiService.getPersonImage} >
+
+        <Record field="gender" label="Gender" />
+        <Record field="eyeColor" label="Eye Color" />
+      </ItemDetails>
     )
 
     return (
