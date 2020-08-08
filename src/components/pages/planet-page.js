@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 
-import ErrorIndicator from '../error-indicator/error-indicator';
+import ErrorIndicator from '../error-indicator';
 import Row from '../row';
 import ErrorBoundry from '../error-boundry';
-import { PlanetList } from '../sw-components';
-import { PlanetDetails } from '../sw-components/details';
+import { PlanetList, PlanetDetails } from '../sw-components';
 
 export default class PlanetPage extends Component {
 

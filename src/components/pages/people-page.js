@@ -1,8 +1,7 @@
 import React from 'react';
 
 import Row from '../row';
-import { PersonList } from '../sw-components';
-import { PersonDetails } from '../sw-components/details';
+import { PersonList, PersonDetails } from '../sw-components';
 import { withRouter } from 'react-router-dom';
 
 const PeoplePage = ({ history, match }) => {

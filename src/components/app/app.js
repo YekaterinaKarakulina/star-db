@@ -2,12 +2,14 @@ import React from 'react';
 
 import Header from '../header';
 import RandomPlanet from '../random-planet';
-import PeoplePage from '../people-page';
-import PlanetPage from '../planet-page';
-import StarshipPage from '../starship-page';
 import ErrorIndicator from '../error-indicator';
 import SwapiService from '../../services/swapi-service';
 import { StarshipDetails } from '../sw-components/details';
+import {
+  PeoplePage, PlanetPage,
+  StarshipPage, LoginPage, SecretPage
+} from '../pages';
+
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import './app.css';
@@ -17,7 +19,14 @@ export default class App extends React.Component {
   swapiService = new SwapiService();
 
   state = {
-    hasError: false
+    hasError: false,
+    isLoggedIn: false
+  }
+
+  onLogin = () => {
+    this.setState({
+      isLoggedIn: true
+    })
   }
 
   componentDidCatch() {
@@ -29,6 +38,8 @@ export default class App extends React.Component {
     if (this.state.hasError) {
       return <ErrorIndicator />
     }
+
+    const { isLoggedIn } = this.state;
 
     return (
       <Router>
@@ -48,6 +59,16 @@ export default class App extends React.Component {
                 <StarshipDetails itemId={id} />
               )
             }} />
+          <Route path="/login"
+            render={() => (
+              <LoginPage
+                isLoggedIn={isLoggedIn}
+                onLogin={this.onLogin} />
+            )} />
+          <Route path="/secret"
+            render={() => (
+              <SecretPage isLoggedIn={isLoggedIn} />
+            )} />
         </div>
       </Router>
     );
