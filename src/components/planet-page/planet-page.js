@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 
-import ItemDetails from '../item-details/item-details';
 import ErrorIndicator from '../error-indicator/error-indicator';
-import SwapiService from '../../services/swapi-service';
 import Row from '../row';
 import ErrorBoundry from '../error-boundry';
-import Record from '../record';
 import { PlanetList } from '../sw-components';
+import { PlanetDetails } from '../sw-components/details';
 
 export default class PlanetPage extends Component {
-
-  swapiService = new SwapiService();
 
   state = {
     selectedItem: 9,
@@ -34,14 +30,7 @@ export default class PlanetPage extends Component {
     )
 
     const itemDetails = (
-      <ItemDetails
-        itemId={this.state.selectedItem}
-        getData={this.swapiService.getPlanet}
-        getImageUrl={this.swapiService.getPlanetImage}>
-        <Record field="population" label="Population" />
-        <Record field="rotationPeriod" label="Rotation Period" />
-        <Record field="diameter" label="Diameter" />
-      </ItemDetails>
+      <PlanetDetails itemId={this.state.selectedItem} />
     )
 
     return (

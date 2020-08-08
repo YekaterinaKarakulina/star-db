@@ -1,51 +1,28 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import ItemDetails from '../item-details/item-details';
-import ErrorIndicator from '../error-indicator/error-indicator';
-import SwapiService from '../../services/swapi-service';
 import Row from '../row';
-import ErrorBoundry from '../error-boundry';
-import Record from '../record';
 import { PersonList } from '../sw-components';
+import { PersonDetails } from '../sw-components/details';
+import { withRouter } from 'react-router-dom';
 
-export default class PeoplePage extends Component {
+const PeoplePage = ({ history, match }) => {
 
-  swapiService = new SwapiService();
+  const { id } = match.params;
 
-  state = {
-    selectedItem: 5,
-    hasError: false
-  }
+  const itemList = (
+    <PersonList
+      onItemSelected={(id) => history.push(id)}
+      renderItem={({ name, gender }) => `${name} (${gender})`}
+    />
+  )
 
-  onItemSelected = (selectedItem) => {
-    this.setState({ selectedItem });
-  };
+  const itemDetails = (
+    <PersonDetails itemId={id} />
+  )
 
-  render() {
-    if (this.state.hasError) {
-      return <ErrorIndicator />;
-    }
-
-    const itemList = (
-      <PersonList
-        onItemSelected={this.onItemSelected}
-        renderItem={({ name, gender }) => `${name} (${gender})`}
-      />
-    )
-
-    const itemDetails = (
-      <ItemDetails itemId={this.state.selectedItem}
-        getData={this.swapiService.getPerson}
-        getImageUrl={this.swapiService.getPersonImage} >
-        <Record field="gender" label="Gender" />
-        <Record field="eyeColor" label="Eye Color" />
-      </ItemDetails>
-    )
-
-    return (
-      <ErrorBoundry>
-        <Row left={itemList} right={itemDetails} />
-      </ErrorBoundry>
-    )
-  }
+  return (
+    <Row left={itemList} right={itemDetails} />
+  )
 }
+
+export default withRouter(PeoplePage);

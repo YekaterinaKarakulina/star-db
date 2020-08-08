@@ -7,9 +7,8 @@ import PlanetPage from '../planet-page';
 import StarshipPage from '../starship-page';
 import ErrorIndicator from '../error-indicator';
 import SwapiService from '../../services/swapi-service';
-
-
-
+import { StarshipDetails } from '../sw-components/details';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import './app.css';
 
@@ -32,16 +31,25 @@ export default class App extends React.Component {
     }
 
     return (
-      <div>
-        <Header />
-        <RandomPlanet />
-        <PeoplePage />
-
-        <PlanetPage />
-        <StarshipPage />
-
-
-      </div>
+      <Router>
+        <div>
+          <Header />
+          <RandomPlanet />
+          <Route path="/"
+            render={() => <h2>Welcome to starDB</h2>}
+            exact />
+          <Route path="/people/:id?" component={PeoplePage} />
+          <Route path="/planets" component={PlanetPage} />
+          <Route path="/starships" exact component={StarshipPage} />
+          <Route path="/starships/:id"
+            render={({ match }) => {
+              const { id } = match.params;
+              return (
+                <StarshipDetails itemId={id} />
+              )
+            }} />
+        </div>
+      </Router>
     );
   }
 }
